@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  api:
+    container_name: "jibber-jabber-auth"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8001:8080
+    env_file:
+      - auth.env
+  db:
+    container_name: jibber_jabber_auth_db
+    image: postgres:12
+    ports:
+      - 5433:5432
+    env_file:
+      - database.env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:
+    external: true

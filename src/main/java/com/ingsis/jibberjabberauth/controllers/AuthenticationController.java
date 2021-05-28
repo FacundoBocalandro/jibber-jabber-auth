@@ -24,7 +24,7 @@ public class AuthenticationController {
         return authenticationService.tokenValidation(token);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/register")
+    @RequestMapping(method = RequestMethod.POST, value = "/register")
     public void register(@RequestBody RegisterUserDto user){
         authenticationService.register(user);
     }

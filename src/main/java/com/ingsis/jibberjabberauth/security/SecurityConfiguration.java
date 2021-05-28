@@ -35,13 +35,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.cors().and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/user").authenticated()
                 .antMatchers("/").permitAll()
                 .antMatchers(HttpMethod.PUT,"/register").permitAll()
                 .antMatchers(HttpMethod.POST,"/login").permitAll()
-                .antMatchers("/chat/**").permitAll()
-                .antMatchers("/topic/**").permitAll()
                 .antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources", "/configuration/security", "/swagger-ui.html", "/webjars/**","/swagger-resources/configuration/ui","/swagger-ui.html").permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement()
@@ -72,8 +69,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         config.addAllowedMethod("POST");
         config.addAllowedMethod("PUT");
         config.addAllowedMethod("DELETE");
-        source.registerCorsConfiguration("/localhost:3000", config);
-        source.registerCorsConfiguration("/localhost:1337", config);
+        source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
 }

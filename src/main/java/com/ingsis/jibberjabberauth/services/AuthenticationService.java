@@ -1,8 +1,7 @@
 package com.ingsis.jibberjabberauth.services;
 
-import com.ingsis.jibberjabberauth.models.AuthenticationRequest;
-import com.ingsis.jibberjabberauth.models.AuthenticationResponse;
-import com.ingsis.jibberjabberauth.models.RoleResponse;
+import com.ingsis.jibberjabberauth.models.*;
+import com.ingsis.jibberjabberauth.repository.UserRepository;
 import com.ingsis.jibberjabberauth.security.JwtUtil;
 import com.ingsis.jibberjabberauth.security.MyUserDetailsService;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +17,14 @@ public class AuthenticationService {
 
     private final MyUserDetailsService myUserDetailsService;
 
+    private final UserRepository userRepository;
+
     private final JwtUtil jwtUtil;
 
-    public AuthenticationService(AuthenticationManager authenticationManager, MyUserDetailsService myUserDetailsService, JwtUtil jwtUtil) {
+    public AuthenticationService(AuthenticationManager authenticationManager, MyUserDetailsService myUserDetailsService, UserRepository userRepository, JwtUtil jwtUtil) {
         this.authenticationManager = authenticationManager;
         this.myUserDetailsService = myUserDetailsService;
+        this.userRepository = userRepository;
         this.jwtUtil = jwtUtil;
     }
 
@@ -42,5 +44,10 @@ public class AuthenticationService {
     public ResponseEntity<?> tokenValidation(String token) {
         String role = jwtUtil.extractRole(token.substring(6));
         return ResponseEntity.ok(new RoleResponse(role));
+    }
+
+    public void register(RegisterUserDto userDto) {
+        User user = new User(userDto.getFirstName(), userDto.getLastName(), userDto.getEmail(), userDto.getUsername(), userDto.getPassword(), "ROLE_USER");
+        userRepository.save(user);
     }
 }

@@ -1,5 +1,6 @@
 package com.ingsis.jibberjabberauth.services;
 
+import com.ingsis.jibberjabberauth.dto.UserInfoDto;
 import com.ingsis.jibberjabberauth.models.*;
 import com.ingsis.jibberjabberauth.repository.UserRepository;
 import com.ingsis.jibberjabberauth.security.JwtUtil;
@@ -82,5 +83,9 @@ public class AuthenticationService {
         response.addCookie(cookie);
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    public UserInfoDto getUserInfo(String token) {
+        return UserInfoDto.fromUser(jwtUtil.getUser(token));
     }
 }

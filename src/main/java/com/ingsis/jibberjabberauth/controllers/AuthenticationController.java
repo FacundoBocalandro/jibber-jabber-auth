@@ -8,19 +8,25 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+
 @RestController
 public class AuthenticationController {
     @Autowired
     AuthenticationService authenticationService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws BadCredentialsException {
-        return authenticationService.createAuthenticationToken(authenticationRequest);
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletResponse response) throws BadCredentialsException {
+        return authenticationService.createAuthenticationToken(authenticationRequest, response);
+    }
 
+    @GetMapping(value = "/delete-token")
+    public ResponseEntity<?> invalidateAuthenticationCookie(HttpServletResponse response) {
+        return authenticationService.invalidateAuthenticationCookie(response);
     }
 
     @GetMapping(value = "/validate-token")
-    public ResponseEntity<?> tokenValidation(@RequestHeader(value = "Authorization") String token){
+    public ResponseEntity<?> tokenValidation(@CookieValue(value = "token") String token){
         return authenticationService.tokenValidation(token);
     }
 

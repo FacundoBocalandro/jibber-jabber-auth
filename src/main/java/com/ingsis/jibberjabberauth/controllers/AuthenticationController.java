@@ -29,9 +29,4 @@ public class AuthenticationController {
     public ResponseEntity<?> tokenValidation(@CookieValue(value = "token") String token){
         return authenticationService.tokenValidation(token);
     }
-
-    @RequestMapping(method = RequestMethod.POST, value = "/register")
-    public void register(@RequestBody RegisterUserDto user){
-        authenticationService.register(user);
-    }
 }

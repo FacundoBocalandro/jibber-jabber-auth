@@ -1,5 +1,6 @@
 package com.ingsis.jibberjabberauth.controllers;
 
+import com.ingsis.jibberjabberauth.dto.UserInfoDto;
 import com.ingsis.jibberjabberauth.models.AuthenticationRequest;
 import com.ingsis.jibberjabberauth.models.RegisterUserDto;
 import com.ingsis.jibberjabberauth.services.AuthenticationService;
@@ -26,8 +27,13 @@ public class AuthenticationController {
     }
 
     @GetMapping(value = "/validate-token")
-    public ResponseEntity<?> tokenValidation(@RequestParam String token){
+    public ResponseEntity<?> tokenValidation(@CookieValue(value = "token") String token){
         return authenticationService.tokenValidation(token);
+    }
+
+    @GetMapping(value = "/user-info")
+    public UserInfoDto getUserInfo(@CookieValue(value = "token") String token) {
+        return authenticationService.getUserInfo(token);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/register")

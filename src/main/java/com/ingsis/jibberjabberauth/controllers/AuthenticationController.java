@@ -26,7 +26,7 @@ public class AuthenticationController {
     }
 
     @GetMapping(value = "/validate-token")
-    public ResponseEntity<?> tokenValidation(@CookieValue(value = "token") String token){
+    public ResponseEntity<?> tokenValidation(@RequestParam String token){
         return authenticationService.tokenValidation(token);
     }
 

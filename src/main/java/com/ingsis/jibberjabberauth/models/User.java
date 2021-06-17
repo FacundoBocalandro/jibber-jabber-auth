@@ -1,6 +1,7 @@
 package com.ingsis.jibberjabberauth.models;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -23,6 +24,13 @@ public class User {
     private String password;
 
     private String role;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "relation",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "following_id"))
+    private Set<User> following;
+
 
     public User() {
     }
@@ -90,5 +98,21 @@ public class User {
 
     public void setRole(String roles) {
         this.role = roles;
+    }
+
+    public void addFollowing(User user) {
+        following.add(user);
+    }
+
+    public void deleteFollowing(User user) {
+        following.remove(user);
+    }
+
+    public Set<User> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(Set<User> following) {
+        this.following = following;
     }
 }

@@ -42,7 +42,7 @@ public class AuthenticationController {
         authenticationService.register(user);
     }
 
-    @GetMapping
+    @RequestMapping(method = RequestMethod.GET, value = "/get-all")
     public List<UserInfoDto> getAllUsers(){
         return authenticationService.getAllUsers();
     }

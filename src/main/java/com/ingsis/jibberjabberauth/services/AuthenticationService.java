@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AuthenticationService {
@@ -87,5 +89,10 @@ public class AuthenticationService {
 
     public UserInfoDto getUserInfo(String token) {
         return UserInfoDto.fromUser(jwtUtil.getUser(token));
+    }
+
+    public List<UserInfoDto> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        return users.stream().map(UserInfoDto::fromUser).collect(Collectors.toList());
     }
 }

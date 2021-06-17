@@ -10,6 +10,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @RestController
 public class AuthenticationController {
@@ -39,5 +40,10 @@ public class AuthenticationController {
     @RequestMapping(method = RequestMethod.POST, value = "/register")
     public void register(@RequestBody RegisterUserDto user){
         authenticationService.register(user);
+    }
+
+    @GetMapping
+    public List<UserInfoDto> getAllUsers(){
+        return authenticationService.getAllUsers();
     }
 }

@@ -2,10 +2,11 @@ version: '3'
 
 services:
   jibber-jabber-auth:
-    container_name: "jibber-jabber-auth"
+    image: jibber-jabber-auth
+    container_name: jibber-jabber-auth
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: local.Dockerfile
     ports:
       - 8081:8080
     env_file:

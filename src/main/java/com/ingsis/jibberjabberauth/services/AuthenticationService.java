@@ -101,7 +101,18 @@ public class AuthenticationService {
     public void followUser(String token, long id) throws NotFoundException {
         User user = jwtUtil.getUser(token);
         User userToFollow = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not found"));
-        user.addFollowing(userToFollow);
-        userRepository.save(user);
+        if (!user.getFollowing().contains(userToFollow)) {
+            user.addFollowing(userToFollow);
+            userRepository.save(user);
+        }
+    }
+
+    public void unfollowUser(String token, long id) throws NotFoundException {
+        User user = jwtUtil.getUser(token);
+        User userToUnfollow = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not found"));
+        if (user.getFollowing().contains(userToUnfollow)) {
+            user.deleteFollowing(userToUnfollow);
+            userRepository.save(user);
+        }
     }
 }

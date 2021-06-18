@@ -53,4 +53,9 @@ public class AuthenticationController {
     public void followUser(@CookieValue(value = "token") String token, @PathVariable long id) throws NotFoundException {
         authenticationService.followUser(token, id);
     }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/unfollow/{id}")
+    public void unfollowUser(@CookieValue(value = "token") String token, @PathVariable long id) throws NotFoundException {
+        authenticationService.unfollowUser(token, id);
+    }
 }

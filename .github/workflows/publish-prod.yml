@@ -2,7 +2,7 @@ name: publish
 
 on:
   push:
-    branches: [ develop ]
+    branches: [ main ]
 
 jobs:
   publish-dev-image:
@@ -20,5 +20,5 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build . -f dev.Dockerfile --tag ghcr.io/facundobocalandro/jj-auth-dev:latest
-          docker push ghcr.io/facundobocalandro/jj-auth-dev:latest
+          docker build . -f prod.Dockerfile --tag ghcr.io/facundobocalandro/jj-auth-prod:latest
+          docker push ghcr.io/facundobocalandro/jj-auth-prod:latest

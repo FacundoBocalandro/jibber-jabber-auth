@@ -54,7 +54,7 @@ public class AuthenticationService {
         cookie.setMaxAge(7 * 24 * 60 * 60);
 
         // optional properties
-//        cookie.setSecure(true);
+        cookie.setSecure(true);
         cookie.setHttpOnly(true);
         cookie.setPath("/");
 

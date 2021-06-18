@@ -4,6 +4,7 @@ import com.ingsis.jibberjabberauth.dto.UserInfoDto;
 import com.ingsis.jibberjabberauth.models.AuthenticationRequest;
 import com.ingsis.jibberjabberauth.models.RegisterUserDto;
 import com.ingsis.jibberjabberauth.services.AuthenticationService;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -45,5 +46,16 @@ public class AuthenticationController {
     @RequestMapping(method = RequestMethod.GET, value = "/get-all")
     public List<UserInfoDto> getAllUsers(){
         return authenticationService.getAllUsers();
+    }
+
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/follow/{id}")
+    public void followUser(@CookieValue(value = "token") String token, @PathVariable long id) throws NotFoundException {
+        authenticationService.followUser(token, id);
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/unfollow/{id}")
+    public void unfollowUser(@CookieValue(value = "token") String token, @PathVariable long id) throws NotFoundException {
+        authenticationService.unfollowUser(token, id);
     }
 }

@@ -5,6 +5,7 @@ import com.ingsis.jibberjabberauth.models.*;
 import com.ingsis.jibberjabberauth.repository.UserRepository;
 import com.ingsis.jibberjabberauth.security.JwtUtil;
 import com.ingsis.jibberjabberauth.security.MyUserDetailsService;
+import javassist.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -94,5 +96,23 @@ public class AuthenticationService {
     public List<UserInfoDto> getAllUsers() {
         List<User> users = userRepository.findAll();
         return users.stream().map(UserInfoDto::fromUser).collect(Collectors.toList());
+    }
+
+    public void followUser(String token, long id) throws NotFoundException {
+        User user = jwtUtil.getUser(token);
+        User userToFollow = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not found"));
+        if (!user.getFollowing().contains(userToFollow)) {
+            user.addFollowing(userToFollow);
+            userRepository.save(user);
+        }
+    }
+
+    public void unfollowUser(String token, long id) throws NotFoundException {
+        User user = jwtUtil.getUser(token);
+        User userToUnfollow = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not found"));
+        if (user.getFollowing().contains(userToUnfollow)) {
+            user.deleteFollowing(userToUnfollow);
+            userRepository.save(user);
+        }
     }
 }

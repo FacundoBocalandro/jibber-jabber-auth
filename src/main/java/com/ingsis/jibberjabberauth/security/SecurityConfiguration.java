@@ -67,8 +67,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.setAllowedOriginPatterns(Collections.singletonList("*"));
-//        config.setAllowedOriginPatterns(List.of("http://localhost:8080", "http://localhost:8082", "http://localhost:8083", "http://localhost:3000", "http://jibber_jabber_proxy", "http://jibber_jabber_posts", "https://jjdev.hopto.org", "https://jjprod.hopto.org"));
+//        config.setAllowedOriginPatterns(Collections.singletonList("*"));
+        config.setAllowedOriginPatterns(List.of("http://localhost:8080", "http://localhost:8082", "http://localhost:8083", "http://localhost:3000", "http://jibber_jabber_proxy", "http://jibber_jabber_posts", "https://jjdev.hopto.org", "https://jjprod.hopto.org"));
         config.addAllowedHeader("*");
         config.addAllowedMethod("OPTIONS");
         config.addAllowedMethod("GET");

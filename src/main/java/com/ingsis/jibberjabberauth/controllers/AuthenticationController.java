@@ -43,6 +43,11 @@ public class AuthenticationController {
         authenticationService.register(user);
     }
 
+    @RequestMapping(method = RequestMethod.PUT, value = "/update/{id}")
+    public void updateUser(@RequestBody RegisterUserDto user, @PathVariable long id) throws NotFoundException {
+        authenticationService.updateUser(user, id);
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/get-all")
     public List<UserInfoDto> getAllUsers(){
         return authenticationService.getAllUsers();

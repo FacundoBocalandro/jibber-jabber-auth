@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -114,5 +113,13 @@ public class AuthenticationService {
             user.deleteFollowing(userToUnfollow);
             userRepository.save(user);
         }
+    }
+
+    public void updateUser(RegisterUserDto user, long id) throws NotFoundException {
+        User oldUser = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not found"));
+        oldUser.setFirstName(user.getFirstName());
+        oldUser.setLastName(user.getLastName());
+        oldUser.setEmail(user.getEmail());
+        userRepository.save(oldUser);
     }
 }

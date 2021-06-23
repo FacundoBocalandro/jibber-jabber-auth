@@ -120,6 +120,11 @@ public class AuthenticationService {
         oldUser.setFirstName(user.getFirstName());
         oldUser.setLastName(user.getLastName());
         oldUser.setEmail(user.getEmail());
+
+        String newPassword = user.getPassword();
+        if (newPassword != null && !newPassword.equals("")) {
+            oldUser.setPassword(user.getPassword());
+        }
         userRepository.save(oldUser);
     }
 }
